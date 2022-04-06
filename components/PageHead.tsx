@@ -1,10 +1,44 @@
 import Head from 'next/head'
-import * as React from 'react'
+import React from 'react'
+
 import * as types from 'lib/types'
+import * as config from 'lib/config'
+import { getSocialImageUrl } from 'lib/get-social-image-url'
 
-// TODO: remove duplication between PageHead and NotionPage Head
+export const PageHead: React.FC<
+  types.PageProps & {
+    title?: string
+    description?: string
+    image?: string
+    imageObjectPosition?: string
+    author?: string
+    authorImage?: string
+    detail?: string
+    url?: string
+  }
+> = ({
+  site,
+  title,
+  description,
+  image,
+  imageObjectPosition,
+  author,
+  authorImage,
+  detail,
+  url
+}) => {
+  title = title ?? site?.name
+  description = description ?? site?.description
 
-export const PageHead: React.FC<types.PageProps> = ({ site }) => {
+  const socialImageUrl = getSocialImageUrl({
+    title,
+    image,
+    imageObjectPosition,
+    author,
+    authorImage,
+    detail
+  })
+
   return (
     <Head>
       <meta charSet='utf-8' />
@@ -14,15 +48,49 @@ export const PageHead: React.FC<types.PageProps> = ({ site }) => {
         content='width=device-width, initial-scale=1, shrink-to-fit=no'
       />
 
-      {site?.description && (
+      <meta name='theme-color' content='#EB625A' />
+      <meta property='og:type' content='website' />
+
+      {site && (
         <>
-          <meta name='description' content={site.description} />
-          <meta property='og:description' content={site.description} />
+          <meta property='og:site_name' content={site.name} />
+          <meta property='twitter:domain' content={site.domain} />
         </>
       )}
 
-      <meta name='theme-color' content='#EB625A' />
-      <meta property='og:type' content='website' />
+      {config.twitter && (
+        <meta name='twitter:creator' content={`@${config.twitter}`} />
+      )}
+
+      {description && (
+        <>
+          <meta name='description' content={description} />
+          <meta property='og:description' content={description} />
+          <meta name='twitter:description' content={description} />
+        </>
+      )}
+
+      {socialImageUrl ? (
+        <>
+          <meta name='twitter:card' content='summary_large_image' />
+          <meta name='twitter:image' content={socialImageUrl} />
+          <meta property='og:image' content={socialImageUrl} />
+        </>
+      ) : (
+        <meta name='twitter:card' content='summary' />
+      )}
+
+      {url && (
+        <>
+          <link rel='canonical' href={url} />
+          <meta property='og:url' content={url} />
+          <meta property='twitter:url' content={url} />
+        </>
+      )}
+
+      <meta property='og:title' content={title} />
+      <meta name='twitter:title' content={title} />
+      <title>{title}</title>
     </Head>
   )
 }
