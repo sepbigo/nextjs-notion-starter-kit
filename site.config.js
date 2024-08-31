@@ -1,15 +1,15 @@
 module.exports = {
   // where it all starts -- the site's root Notion page (required)
-  rootNotionPageId: '47d9ba5219c54265b71b09022f00979f',
+  rootNotionPageId: '660bf243f92c49f49126b4e04e7e421a',
 
   // if you want to restrict pages to a single notion workspace (optional)
   // (this should be a Notion ID; see the docs for how to extract this)
   rootNotionSpaceId: '',
 
   // basic site info (required)
-  name: 'tangly1024',
-  domain: 'tanghh',
-  author: 'tangly1024',
+  name: '樱桃小完犊子',
+  domain: 'kit.ikun.su',
+  author: 'Dfr520821@',
 
   // open graph metadata (optional)
   description: '',
@@ -18,7 +18,7 @@ module.exports = {
 
   // social usernames (optional)
   twitter: '',
-  github: 'tangly1024',
+  github: 'sepbigo',
   linkedin: '',
 
   // default notion icon and cover images for site-wide consistency (optional)
